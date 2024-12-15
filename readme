@@ -1,0 +1,99 @@
+
+## **Backend (Server)**
+
+1. **Build the Docker Image:**
+   ```bash
+   docker build -t server .
+   ```
+
+2. **Run the Container:**
+   ```bash
+   docker run -it -p 5000:5000 --network basic --env-file .env --name server server
+   ```
+
+### Breakdown:
+- `-t server` creates an image named `server`.
+- `-p 5000:5000` maps port 5000 of the container to port 5000 on your host machine.
+- `--network basic` connects the container to a custom Docker network named `basic`.
+- `--env-file .env` loads environment variables from the `.env` file into the container.
+- `--name server` names the container `server` for easy identification.
+
+---
+
+## **Frontend (Client)**
+
+1. **Build the Docker Image:**
+   Navigate to the **frontend directory** (where the Dockerfile for the React app is located):
+   ```bash
+   docker build -t client .
+   ```
+
+2. **Run the Container:**
+   ```bash
+   docker run -it -p 3000:80 --network basic --name client client
+   ```
+
+### Breakdown:
+- `-t client` creates an image named `client`.
+- `-p 3000:80` maps port 80 of the container (default Nginx or frontend server port) to port 3000 on your host machine.
+- `--network basic` connects the container to the same network as the backend.
+- `--name client` names the container `client`.
+
+---
+
+## **Set Up the Docker Network (Optional)**
+
+If the Docker network named `basic` does not exist, create it:
+```bash
+docker network create basic
+```
+
+---
+
+## **Accessing the Applications**
+
+1. **Backend API:**
+   - Accessible via `http://localhost:5000` (or `http://server:5000` within the `basic` Docker network).
+
+2. **Frontend Application:**
+   - Accessible via `http://localhost:3000`.
+
+---
+
+## **Environment Variables**
+
+### Backend (`.env` file example for the server):
+```env
+MONGO_URI=mongodb://mongo:27017/mydatabase
+PORT=5000
+```
+
+### Frontend (`.env` file example for the client):
+```env
+VITE_API_BASE_URL=http://server:5000
+```
+
+Make sure these `.env` files are placed in their respective project directories.
+
+---
+
+## **Cleanup Commands**
+
+- **Stop Containers:**
+  ```bash
+  docker stop server client
+  ```
+
+- **Remove Containers:**
+  ```bash
+  docker rm server client
+  ```
+
+- **Remove Images:**
+  ```bash
+  docker rmi server client
+  ```
+
+---
+
+This setup ensures that the **frontend** communicates with the **backend** via the Docker network using `http://server:5000`, while the backend can connect to external services like MongoDB (if needed). Let me know if you need further help! 🚀

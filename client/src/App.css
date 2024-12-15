@@ -1,0 +1,128 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: #fff; /* Pure white headings */
+    text-align: center;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #1a1a1a; /* Dark gray container */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Header */
+  header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  header p {
+    color: #ccc; /* Light gray for subtitle */
+    font-size: 1rem;
+    margin-top: 0;
+  }
+  
+  /* Form */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  
+  form label {
+    font-weight: bold;
+    color: #ddd; /* Slightly lighter gray */
+  }
+  
+  form input {
+    padding: 0.8rem;
+    border: 1px solid #444; /* Dark gray border */
+    border-radius: 5px;
+    background-color: #1a1a1a; /* Dark gray input background */
+    color: #fff; /* White text */
+  }
+  
+  form input::placeholder {
+    color: #777; /* Medium gray placeholder */
+  }
+  
+  form button {
+    padding: 0.8rem 1rem;
+    background-color: #000; /* Black button */
+    color: #fff; /* White text */
+    border: 2px solid #444; /* Dark gray border */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  form button:hover {
+    background-color: #fff; /* White button on hover */
+    color: #000; /* Black text */
+  }
+  
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+  }
+  
+  table thead {
+    background-color: #000; /* Black header */
+    color: #fff; /* White text */
+  }
+  
+  table th, table td {
+    text-align: left;
+    padding: 0.8rem;
+    border-bottom: 1px solid #444; /* Dark gray border */
+  }
+  
+  table tbody tr:nth-child(even) {
+    background-color: #1a1a1a; /* Dark gray for even rows */
+  }
+  
+  table tbody tr:hover {
+    background-color: #333; /* Medium gray on hover */
+  }
+  
+  /* Buttons in Table */
+  table button {
+    padding: 0.4rem 0.8rem;
+    background-color: #1a1a1a; /* Dark gray button */
+    color: #fff; /* White text */
+    border: 1px solid #444; /* Dark gray border */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  table button:hover {
+    background-color: #fff; /* White button on hover */
+    color: #000; /* Black text */
+  }
+  
+  /* Error Message */
+  .error-message {
+    background-color: #333; /* Medium gray background */
+    color: #ff4d4d; /* Red text for error */
+    padding: 1rem;
+    border: 1px solid #ff4d4d; /* Red border */
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
