@@ -1,99 +1,147 @@
+---
 
-## **Backend (Server)**
+# Project Setup: Dockerized Backend and Frontend
 
-1. **Build the Docker Image:**
+This project demonstrates a simple full-stack web application with **frontend** and **backend** services running in **Docker containers**. The backend is built using **Node.js** and **Express**, while the frontend is built with **React**.
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Setup Instructions](#setup-instructions)
+  - [Backend Setup](#backend-setup)
+  - [Frontend Setup](#frontend-setup)
+- [Running the Application](#running-the-application)
+- [Environment Variables](#environment-variables)
+- [Accessing the Applications](#accessing-the-applications)
+- [Cleanup](#cleanup)
+- [Troubleshooting](#troubleshooting)
+
+---
+
+## **Prerequisites**
+
+Before getting started, ensure you have the following installed:
+
+- **Docker**: [Download and install Docker](https://www.docker.com/products/docker-desktop).
+- **Docker Compose** (Optional, for complex setups): [Docker Compose installation guide](https://docs.docker.com/compose/install/).
+
+---
+
+## **Setup Instructions**
+
+Follow these steps to set up both the backend and frontend of the application in Docker containers.
+
+### **Backend Setup**
+
+1. **Build the Backend Docker Image**:
+
+   Navigate to the **backend directory** (where the `Dockerfile` for the backend is located):
    ```bash
    docker build -t server .
    ```
 
-2. **Run the Container:**
+2. **Run the Backend Docker Container**:
+
+   Run the Docker container for the backend service:
    ```bash
    docker run -it -p 5000:5000 --network basic --env-file .env --name server server
    ```
 
-### Breakdown:
-- `-t server` creates an image named `server`.
-- `-p 5000:5000` maps port 5000 of the container to port 5000 on your host machine.
-- `--network basic` connects the container to a custom Docker network named `basic`.
-- `--env-file .env` loads environment variables from the `.env` file into the container.
-- `--name server` names the container `server` for easy identification.
+   - This command will start the backend API server and expose it on port `5000`.
 
----
+### **Frontend Setup**
 
-## **Frontend (Client)**
+1. **Build the Frontend Docker Image**:
 
-1. **Build the Docker Image:**
-   Navigate to the **frontend directory** (where the Dockerfile for the React app is located):
+   Navigate to the **frontend directory** (where the `Dockerfile` for the React app is located):
    ```bash
    docker build -t client .
    ```
 
-2. **Run the Container:**
+2. **Run the Frontend Docker Container**:
+
+   Run the Docker container for the frontend service:
    ```bash
    docker run -it -p 3000:80 --network basic --name client client
    ```
 
-### Breakdown:
-- `-t client` creates an image named `client`.
-- `-p 3000:80` maps port 80 of the container (default Nginx or frontend server port) to port 3000 on your host machine.
-- `--network basic` connects the container to the same network as the backend.
-- `--name client` names the container `client`.
+   - This will start the frontend React app and expose it on port `3000`.
 
 ---
 
-## **Set Up the Docker Network (Optional)**
+## **Running the Application**
 
-If the Docker network named `basic` does not exist, create it:
+### **Set Up the Docker Network (Optional)**
+
+If the Docker network `basic` does not already exist, create it using:
 ```bash
 docker network create basic
 ```
 
----
+This command ensures that both the frontend and backend containers can communicate with each other.
 
-## **Accessing the Applications**
+### **Accessing the Applications**
 
-1. **Backend API:**
-   - Accessible via `http://localhost:5000` (or `http://server:5000` within the `basic` Docker network).
+1. **Backend API**:  
+   After running the backend container, you can access the API at:
+   - `http://localhost:5000` (on your host machine)
+   - `http://server:5000` (within Docker network)
 
-2. **Frontend Application:**
-   - Accessible via `http://localhost:3000`.
+2. **Frontend Application**:  
+   After running the frontend container, you can access the React application at:
+   - `http://localhost:3000`
 
 ---
 
 ## **Environment Variables**
 
-### Backend (`.env` file example for the server):
+### Backend (`.env` file for the server):
 ```env
 MONGO_URI=mongodb://mongo:27017/mydatabase
 PORT=5000
 ```
+Place this `.env` file in your **backend project directory**. It contains environment variables, such as the MongoDB URI and the port the server will run on.
 
-### Frontend (`.env` file example for the client):
+### Frontend (`.env` file for the client):
 ```env
 VITE_API_BASE_URL=http://server:5000
 ```
-
-Make sure these `.env` files are placed in their respective project directories.
-
----
-
-## **Cleanup Commands**
-
-- **Stop Containers:**
-  ```bash
-  docker stop server client
-  ```
-
-- **Remove Containers:**
-  ```bash
-  docker rm server client
-  ```
-
-- **Remove Images:**
-  ```bash
-  docker rmi server client
-  ```
+Place this `.env` file in your **frontend project directory**. It defines the base URL for API requests, where `server:5000` points to the backend container in the Docker network.
 
 ---
 
-This setup ensures that the **frontend** communicates with the **backend** via the Docker network using `http://server:5000`, while the backend can connect to external services like MongoDB (if needed). Let me know if you need further help! 🚀
+## **Cleanup**
+
+To stop and remove the containers and images:
+
+### Stop the Containers:
+```bash
+docker stop server client
+```
+
+### Remove the Containers:
+```bash
+docker rm server client
+```
+
+### Remove the Docker Images:
+```bash
+docker rmi server client
+```
+
+This will remove the running containers and images from your system.
+
+---
+
+## **Troubleshooting**
+
+- **Proxy Configuration Issue**: If the frontend is not able to connect to the backend, ensure that both containers are on the same Docker network (`basic`) and that the frontend uses the correct API URL (`VITE_API_BASE_URL` in `.env`).
+  
+- **API Not Accessible**: If you're unable to access the backend API, make sure the backend container is running and listening on port `5000`. Check the Docker logs for more information:
+  ```bash
+  docker logs server
+  ```
+
+- **CORS Issues**: If you experience CORS issues while making requests from the frontend, ensure your backend server has appropriate CORS headers set.
+
+---
