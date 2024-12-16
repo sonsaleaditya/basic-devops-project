@@ -145,3 +145,5 @@ This will remove the running containers and images from your system.
 - **CORS Issues**: If you experience CORS issues while making requests from the frontend, ensure your backend server has appropriate CORS headers set.
 
 ---
+
+This README file should help guide you through the entire process of setting up and running both the backend and frontend in Docker containers. If you face any further issues, feel free to raise them. Happy coding!
