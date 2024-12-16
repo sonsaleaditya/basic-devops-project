@@ -27,7 +27,7 @@ yarn-error.log*
 Thumbs.db
 
 # Package lock files (optional, add it if you use npm)
-package-lock.json
+
 
 # Coverage reports (if you are using testing tools like Jest)
 coverage/
